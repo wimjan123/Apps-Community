@@ -16,7 +16,7 @@
         pgrole: 'amp'
         intport: '8080'
         extport: '8087'
-        image: 'cubecoders/ampbase'
+        image: 'mitchtalmadge/amp-dockerized:latest'
 
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
