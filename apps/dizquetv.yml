@@ -14,7 +14,7 @@
 
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'ampmanager'
+        pgrole: 'dizquetv'
         intport: '8000'
         extport: '6900'
         image: ' vexorian/dizquetv'
