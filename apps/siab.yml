@@ -1,35 +1,40 @@
 #!/bin/bash
 #
-# Title:      docker-calibre
-# Author(s):  Kovid Goyal & Contributors, linuxserver.io
-# URL:        https://calibre-ebook.com/ - https://github.com/linuxserver/docker-calibre
+# Title:      Shell In A Box (siab)
+# Author(s):  timekills/sspreitzer
+# URL:        https://plexguide.com - http://github.plexguide.com
 # GNU:        General Public License v3.0
+# Docker:     Docker image is available at: https://github.com/sspreitzer/shellinabox
 ################################################################################
 ---
 - hosts: localhost
   gather_facts: false
   tasks:
-    # FACTS #######################################################################
+    # CORE (MANDATORY) DO NOT CHANGE ###########################################
+
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'calibre'
-        intport: '8080'
-        extport: '8089'
-        intport2: '8081'
-        extport2: '8091'
-        image: 'linuxserver/calibre:latest'
+        pgrole: 'siab'
+        intport: '4200'
+        extport: '4200'
+        image: 'sspreitzer/shellinabox:latest'
 
-    # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
 
-    # LABELS ######################################################################
+    # EXTRA FUNCTIONS REQUIRED BY THE ROLE #####################################
+
+    # LABELS #### KEEPS BOTTOM CLEAN ###########################################
     - name: 'Adding Traefik'
       set_fact:
         pg_labels:
           traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.enable: 'true'
           traefik.port: '{{intport}}'
+          traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}},{{tldset}}'
+          traefik.enable: 'true'
+          traefik.port: '{{intport}}'
+          traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
           traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
           traefik.frontend.headers.SSLRedirect: 'true'
@@ -41,22 +46,29 @@
           traefik.frontend.headers.customResponseHeaders: 'X-Robots-Tag:noindex,nofollow,nosnippet,noarchive,notranslate,noimageindex'
           traefik.frontend.headers.forceSTSHeader: 'true'
 
-    - name: 'Setting PG Volumes'
+    - name: 'Setting default Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}:/config:rw'
+          - '/opt/appdata/{{pgrole}}:/home/:rw'
           - '{{path.stdout}}:{{path.stdout}}'
-          - '/mnt:/mnt:rw'
           - '/etc/localtime:/etc/localtime:ro'
-          - '/mnt/unionfs/libary:/library:rw'
-
-    - name: 'Setting PG ENV'
+          - '/mnt:/mnt'
+    - name: 'Setting default ENV'
       set_fact:
         pg_env:
-          PUID: '1000'
-          PGID: '1000'
+          SIAB_ADDUSER: "true"
+          SIAB_USER: "tkadmin"
+          SIAB_GROUP: "guest"
+          SIAB_PASSWORD: "!test!"
+          SIAB_SHELL: "/bin/bash"
+          SIAB_HOME: "/home/tkadmin"
+          SIAB_SUDO: "true"
+          SIAB_SSL: "false"
+          ALSADEV: "hw:2,0"
+#          SECURE_CONNECTION: 1
 
     # MAIN DEPLOYMENT #############################################################
+
     - name: 'Deploying {{pgrole}}'
       docker_container:
         name: '{{pgrole}}'
@@ -64,7 +76,7 @@
         pull: yes
         published_ports:
           - '{{ports.stdout}}{{extport}}:{{intport}}'
-          - '{{ports.stdout}}{{extport2}}:{{intport2}}'
+          - '4200:4200/tcp'
         volumes: '{{pg_volumes}}'
         env: '{{pg_env}}'
         restart_policy: unless-stopped
@@ -72,5 +84,7 @@
           - name: plexguide
             aliases:
               - '{{pgrole}}'
+        expose:
+          - 4200
         state: started
         labels: '{{pg_labels}}'
