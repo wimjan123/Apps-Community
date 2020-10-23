@@ -37,7 +37,6 @@
       set_fact:
         pg_volumes:
           - '/custom-data/dizquetv:/home/node/app/.dizquetv'
-          - '{{path.stdout}}:{{path.stdout}}'
           - '/mnt:/mnt'
           - '/etc/localtime:/etc/localtime:ro'
 
