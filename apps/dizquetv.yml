@@ -37,7 +37,7 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/dizquetv:/home/node/app/.dizquetv'
-          - '/mnt:/mnt'
+          - '/mnt/unionfs:/mnt/unionfs/'
           - '/etc/localtime:/etc/localtime:ro'
 
     - name: 'Setting PG ENV'
