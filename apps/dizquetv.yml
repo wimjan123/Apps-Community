@@ -17,7 +17,7 @@
         pgrole: 'dizquetv'
         intport: '8000'
         extport: '6900'
-        image: ' vexorian/dizquetv'
+        image: 'vexorian/dizquetv'
 
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
