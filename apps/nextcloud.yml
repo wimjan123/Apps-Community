@@ -38,7 +38,6 @@
           - '/etc/localtime:/etc/localtime:ro'
           - '/opt/appdata/nextcloud/data:/data'
           - '/opt/appdata/{{pgrole}}/conf:/config'
-          - '{{path.stdout}}:{{path.stdout}}'
           - '/mnt:/mnt'
 
     - name: 'Setting PG ENV'
@@ -53,7 +52,7 @@
         image: 'linuxserver/nextcloud'
         pull: yes
         published_ports:
-          - '127.0.0.0.1:4645:443'
+          - '{{ports.stdout}}{{extport}}:{{intport}}'
         env:
           PUID: '1000'
           PGID: '1000'
