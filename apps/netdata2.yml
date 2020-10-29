@@ -45,7 +45,6 @@
         pg_volumes:
           - '/opt/appdata/{{pgrole}}/netdatalib:/var/lib/netdata:rw'          
           - '/opt/appdata/{{pgrole}}/netdatacache:/var/cache/netdata:rw'
-          - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/passwd:/host/etc/passwd:ro'
           - '/etc/group:/host/etc/group:ro'
           - '/proc:/host/proc:ro'

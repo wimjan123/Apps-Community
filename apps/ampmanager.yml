@@ -38,6 +38,7 @@
           - '/opt/appdata/{{pgrole}}:/home/amp'
           - '/opt/appdata/{{pgrole}}/Amp:/minecraft/Minecraft'
           - '/opt/appdata/{{pgrole}}/plugins:/home/amp/plugins'
+          - '{{path.stdout}}:{{path.stdout}}'
           - '/mnt:/mnt'
           - '/etc/localtime:/etc/localtime:ro'
 
