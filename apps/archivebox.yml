@@ -17,7 +17,7 @@
         pgrole: 'archivebox'
         intport: '8000'
         extport: '5555'
-        image: 'vexorian/dizquetv'
+        image: 'nikisweeting/archivebox'
 
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
