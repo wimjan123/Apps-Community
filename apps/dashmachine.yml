@@ -14,10 +14,10 @@
 
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'archivebox'
-        intport: '8000'
-        extport: '5555'
-        image: 'nikisweeting/archivebox'
+        pgrole: 'dashmachine'
+        intport: '5000'
+        extport: '5000'
+        image: 'rmountjoy/dashmachine:latest'
 
     - name: 'Including cron job'
       include_tasks: '/opt/communityapps/apps/_core.yml'
@@ -36,7 +36,7 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/mnt/unionfs/PLEXDRIVE/archive:/data'
+          - '/opt/appdata/{{pgrole}}:/dashmachine/dashmachine/user_data'
           - '/mnt/unionfs:/mnt/unionfs/'
           - '/etc/localtime:/etc/localtime:ro'
 
