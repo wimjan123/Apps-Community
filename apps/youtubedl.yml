@@ -36,7 +36,8 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}:/youtubedl-material'
+          - '/opt/appdata/{{pgrole}}:/app/'
+          - '/mnt/unionfs/PLEXDRIVE/youtube:/app/video/'
           - '/mnt/unionfs:/mnt/unionfs/'
           - '/etc/localtime:/etc/localtime:ro'
 
