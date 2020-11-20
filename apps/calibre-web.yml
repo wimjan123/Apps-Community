@@ -15,7 +15,7 @@
         pgrole: 'calibre-web'
         intport: '8083'
         extport: '8104'
-        image: 'technosoft2000/calibre-web'
+        image: 'linuxserver/calibre-web:calibre'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -47,8 +47,8 @@
           - '/opt/appdata/{{pgrole}}:/books'
           - '/opt/appdata/{{pgrole}}/config:/calibre-web/config'
           - '/etc/localtime:/etc/localtime:ro'
-          - '/mnt/unionfs:/mnt/unionfs'
-          - '/ebooks:/ebooks'
+          - '/mnt/unionfs:/mnt/unionfs:rw'
+          - '/ebooks:/ebooks:rw'
 
     - name: 'Setting PG ENV'
       set_fact:
