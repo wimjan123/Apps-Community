@@ -17,7 +17,7 @@
         extport: '7000'
         intport2: '7001'
         extport2: '7001'
-        image: 'phlak/mumble'
+        image: 'jasonjerome/jjmumblebot'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Always have a backup plan'
