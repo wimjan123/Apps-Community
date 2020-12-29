@@ -17,7 +17,7 @@
         extport: '64738/udp'
         intport2: '64738/tcp'
         extport2: '64738/tcp'
-        image: 'vimagick/murmur'
+        image: 'phlak/mumble'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Always have a backup plan'
@@ -48,10 +48,12 @@
           - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/localtime:/etc/localtime:ro'
           - '/mnt:/mnt'
+          - '/mumble-data:/opt/appdata/mumble'
 
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
+          SUPERUSER_PASSWORD: "Password"
           PUID: '1000'
           PGID: '1000'
 
