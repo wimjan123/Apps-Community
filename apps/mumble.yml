@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-# Title:      docker-calibre
-# Author(s):  Kovid Goyal & Contributors, linuxserver.io
-# URL:        https://calibre-ebook.com/ - https://github.com/linuxserver/docker-calibre
+# Title:      PGBlitz (Reference Title File)
+# Author(s):  Admin9705
+# URL:        https://pgblitz.com - http://github.pgblitz.com
 # GNU:        General Public License v3.0
 ################################################################################
 ---
@@ -10,26 +10,26 @@
   gather_facts: false
   tasks:
     # FACTS #######################################################################
-    - name: 'Set Known Facts'
+    - name: 'Creating Alternative Facts'
       set_fact:
-        pgrole: 'calibre'
-        intport: '8080'
-        extport: '8089'
-        intport2: '8081'
-        extport2: '8091'
-        image: 'linuxserver/calibre:latest'
+        pgrole: 'mumble'
+        intport: '64738/udp'
+        extport: '64738/udp'
+        intport2: '64738/tcp'
+        extport2: '64738/tcp'
+        image: 'phlak/mumble'
 
     # CORE (MANDATORY) ############################################################
-    - name: 'Including cron job'
+    - name: 'Always have a backup plan'
       include_tasks: '/opt/communityapps/apps/_core.yml'
 
     # LABELS ######################################################################
-    - name: 'Adding Traefik'
+    - name: 'Navigating Traefik'
       set_fact:
         pg_labels:
-          traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.enable: 'true'
           traefik.port: '{{intport}}'
+          traefik.frontend.auth.forward.address: '{{gauth}}'
           traefik.frontend.rule: 'Host:{{pgrole}}.{{domain.stdout}}{{tldset}}{{cname}}'
           traefik.frontend.headers.SSLHost: '{{domain.stdout}}'
           traefik.frontend.headers.SSLRedirect: 'true'
@@ -44,14 +44,16 @@
     - name: 'Setting PG Volumes'
       set_fact:
         pg_volumes:
-          - '/opt/appdata/{{pgrole}}:/config:rw'
-          - '/mnt:/mnt:rw'
+          - '/opt/appdata/{{pgrole}}:/config'
+          - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/localtime:/etc/localtime:ro'
-          - '/mnt/unionfs/libary:/library:rw'
+          - '/mnt:/mnt'
+          - '/mumble-data:/opt/appdata/mumble'
 
     - name: 'Setting PG ENV'
       set_fact:
         pg_env:
+          SUPERUSER_PASSWORD: "Password"
           PUID: '1000'
           PGID: '1000'
 
@@ -63,7 +65,6 @@
         pull: yes
         published_ports:
           - '{{ports.stdout}}{{extport}}:{{intport}}'
-          - '{{ports.stdout}}{{extport2}}:{{intport2}}'
         volumes: '{{pg_volumes}}'
         env: '{{pg_env}}'
         restart_policy: unless-stopped
