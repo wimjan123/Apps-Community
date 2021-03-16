@@ -27,7 +27,7 @@
 
     - name: 'Including folders'
       include_tasks: '/opt/communityapps/apps/_downloaders.yml'
-      
+
     - name: Checking for existing app data
       stat:
         path: '/opt/appdata/{{pgrole}}/rutorrent/rtorrent/rtorrent.rc'
@@ -55,7 +55,6 @@
       set_fact:
         pg_volumes:
           - '/etc/localtime:/etc/localtime:ro'
-          - '{{path.stdout}}:{{path.stdout}}'
           - '/mnt:/mnt'
           - '/opt/appdata/{{pgrole}}:/config'
           - '/opt/appdata/{{pgrole}}/sock:/run/php'
