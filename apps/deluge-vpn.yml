@@ -16,7 +16,7 @@
         intport: '8112'
         extport: '8112'
         intport2: '8118'
-        extport2: '8118'
+        extport2: '8119'
         image: 'binhex/arch-delugevpn'
 
     # CORE (MANDATORY) ############################################################
