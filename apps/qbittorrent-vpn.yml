@@ -75,7 +75,7 @@
           VPN_OPTIONS: ''
           STRICT_PORT_FORWARD: 'no'
           ENABLE_PRIVOXY: 'no'
-          LAN_NETWORK: '127.20.0.0/16'
+          LAN_NETWORK: '172.18.0.0/16'
           NAME_SERVERS: '{{dnsserver1}},{{dnsserver2}},{{dnsserver3}},{{dnsserver4}}'
           DEBUG: 'false'
           WEBUI_PORT: '{{intport}}'
