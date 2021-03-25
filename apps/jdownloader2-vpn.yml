@@ -59,7 +59,6 @@
       set_fact:
         pg_volumes:
           - '/etc/localtime:/etc/localtime:ro'
-
           - '/mnt:/mnt'
           - '/opt/appdata/{{pgrole}}:/config'
           - '{{path.stdout}}/downloads/{{pgrole}}/:/output:rw'
