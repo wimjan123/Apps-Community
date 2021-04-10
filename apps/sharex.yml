@@ -64,6 +64,9 @@
         pg_env:
           PUID: '1000'
           PGID: '1000'
+          KEY: 'KinderKanker'
+          DOMAIN: 'sharex.newserver.thewillonline.nl'
+          ADMIN_KEY: 'Sportlaan11'
 
     # MAIN DEPLOYMENT #############################################################
 
