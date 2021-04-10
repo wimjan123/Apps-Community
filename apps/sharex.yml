@@ -21,10 +21,10 @@
 
     - name: 'Set Known Facts'
       set_fact:
-        pgrole: 'sharesite'
+        pgrole: 'sharex'
         intport: '80'
         extport: '41080'
-        image: 'evanhoucke/jirafeau'
+        image: 'zzeneg/sharex-server'
 
     # CORE (MANDATORY) ############################################################
     - name: 'Including cron job'
@@ -56,9 +56,8 @@
       set_fact:
         pg_volumes:
           - '/opt/appdata/{{pgrole}}/config:/config'
-          - '{{path.stdout}}:{{path.stdout}}'
           - '/etc/localtime:/etc/localtime:ro'
-          - '/mnt:/mnt'
+          - '/mnt/PLEXDRIVE/Screenshots:/sharex/src/server/uploads'
 
     - name: 'Setting PG ENV'
       set_fact:
